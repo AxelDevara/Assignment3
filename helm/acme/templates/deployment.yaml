@@ -4,7 +4,7 @@ metadata:
   name: "acme"
 spec: 
   selector:
-    matchlabels:
+    matchLabels:
       app: "acme"
   replicas: {{ .Values.replicaCount }}
   template:
