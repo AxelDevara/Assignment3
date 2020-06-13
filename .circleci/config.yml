@@ -172,7 +172,6 @@ jobs:
           command: |
             cd artifacts/infra
             make init
-            make up
             terraform output endpoint > ../dbendpoint.txt
       - run:
           name: deploy app
