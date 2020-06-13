@@ -183,7 +183,7 @@ jobs:
           name: seed database
           command: |
             sleep 10
-            kubectl exec deployment/acme -n test -- env NODE_ENV=test node_modules/.bin/sequelize db:migrate
+            kubectl exec deployment/acme -n test -- env NODE_ENV=prod node_modules/.bin/sequelize db:migrate
 
   deploy-prod:
     docker:
