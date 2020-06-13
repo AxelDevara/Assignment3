@@ -1,3 +1,7 @@
 replicaCount: 1
 image: acme
 dbhost: localhost
+dbname: postgres
+dbpass: password
+name: servian
+      
