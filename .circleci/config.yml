@@ -115,7 +115,7 @@ jobs:
   package:
     machine: true
     environment:
-      ECR: <insert>
+      ECR: 903145624392.dkr.ecr.us-east-1.amazonaws.com/app
       reponame: app
       NODE_ENV: production
     steps:
@@ -158,6 +158,33 @@ jobs:
           root: ./
           paths:
             - artifacts
+  
+  deploy-test:
+    docker:
+      - image: cimg/base:2020.01
+    environment:
+      ENV: test
+    steps:
+      - attach_workspace:
+          at: ./
+      - setup-cd
+      - run:
+          name: deploy infra
+          command: |
+            cd artifacts/infra
+            make init
+            make up
+            terraform output endpoint > ../dbendpoint.txt
+      - run:
+          name: deploy app
+          command: |
+            kubectl get namespace test || kubectl create namespace test
+            helm upgrade app artifacts/acme-0.1.0.tgz -i -n prod --wait --set image=$(cat artifacts/image.txt),dbhost=$(cat artifacts/dbendpoint.txt)
+      - run:
+          name: upgrade database
+          command: |
+            kubectl exec deployment/acme -n test -- ./TechTestApp updatedb -s
+
 
 
 
@@ -179,3 +206,6 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-test:
+          requires:
+            - package
