@@ -17,7 +17,7 @@ spec:
         imagePullPolicy: Always
         name: "acme"
         env:
-          - name: acme-db
+          - name: DB_HOST
             value: {{ .Values.dbhost }}
         ports:
         - containerPort: 80
