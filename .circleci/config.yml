@@ -182,6 +182,7 @@ jobs:
       - run:
           name: upgrade database
           command: |
+            sleep 10s
             kubectl exec deployment/acme -n test -- env NODE_ENV=production node_modules/.bin/sequilize db:migrate
 
 
