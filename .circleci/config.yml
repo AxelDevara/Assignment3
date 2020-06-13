@@ -21,7 +21,7 @@ commands:
           curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
           chmod +x kops-linux-amd64
           sudo mv kops-linux-amd64 /usr/local/bin/kops
-          kops export kubecfg rmit.k8s.local --state s3://rmit-kops-state-r1mf5o
+          kops export kubecfg rmit.k8s.local --state s3://rmit-kops-state-e19kt2
 
 
 jobs:
@@ -172,6 +172,7 @@ jobs:
           command: |
             cd artifacts/infra
             make init
+            make up
             terraform output endpoint > ../dbendpoint.txt
       - run:
           name: deploy app
