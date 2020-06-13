@@ -172,6 +172,7 @@ jobs:
           command: |
             cd artifacts/infra
             make init
+            make down
             make up
             terraform output endpoint > ../dbendpoint.txt
       - run:
