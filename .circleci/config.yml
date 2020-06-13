@@ -180,7 +180,7 @@ jobs:
             kubectl get namespace test || kubectl create namespace test
             helm upgrade app artifacts/acme-0.1.0.tgz -i -n test --wait --set image=$(cat artifacts/image.txt),dbhost=$(cat artifacts/dbendpoint.txt)
       - run:
-          name: upgrade database
+          name: seed database
           command: |
             sleep 10s
             kubectl exec deployment/acme -n test -- env NODE_ENV=production node_modules/.bin/sequelize db:migrate
